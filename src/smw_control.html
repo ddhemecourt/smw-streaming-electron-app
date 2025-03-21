@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="smw_control.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SMW Streaming</title>
+  </head>
+  <body>
+    <div id="body-inner-container">
+      <div>
+        <nav id="main-nav">
+          <img src="img/RFlogo.png" alt="DemoRF" class="logo" />
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a class="current" href="smw_control.html">SMW Control</a></li>
+            <li><a href="direct_pdw_send.html">Direct PDW Send</a></li>
+            <li><a href="rt_pdw_controller.html">RT PDW Controller</a></li>
+            <li><a href="rt_adw_controller.html">RT ADW Controller</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <header>
+          <h1>SMW200A Streaming Control</h1>
+        </header>
+        <div style="margin-left: 30px">
+          <h2>SMW200A Connections:</h2>
+          <button id="add-smw-btn"><i class="fas fa-plus fa-2x"></i></button>
+        </div>
+        <div id="smw-list" class="container"></div>
+        <div id="modal" class="modal">
+          <div id="form-modal" class="modal-box"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

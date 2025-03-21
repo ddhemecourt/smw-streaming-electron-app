@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="rt_adw_controller.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SMW Streaming</title>
+  </head>
+  <body>
+    <div id="body-inner-container">
+      <div>
+        <nav id="main-nav">
+          <img src="img/RFlogo.png" alt="DemoRF" class="logo" />
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="smw_control.html">SMW Control</a></li>
+            <li>
+              <a href="direct_pdw_send.html">Direct PDW Send</a>
+            </li>
+            <li>
+              <a href="rt_pdw_controller.html">RT PDW Controller</a>
+            </li>
+            <li>
+              <a class="current" href="rt_adw_controller.html"
+                >RT ADW Controller</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <header>
+          <h1>Real-Time ADW Streaming Controller</h1>
+        </header>
+        <div class="container">
+          <div class="card">
+            <h3>Select SMW200A Baseband</h3>
+            <div id="bb-select-card">
+              <div class="bb-select"></div>
+            </div>
+            <button id="init-adw-streaming-btn" class="init-streaming-button">
+              <i class="fas fa-circle-arrow-up"></i> Initialize Streaming
+            </button>
+            <h4>
+              Note: Initialize Baseband A Extended Sequencer to Agile
+              Sequencing. Select wv list on the SMW
+            </h4>
+          </div>
+          <h3>Agile Descriptor Words</h3>
+          <button id="add-adw-btn"><i class="fas fa-plus fa-2x"></i></button>
+          <div id="adw-list">
+            <div id="adw_0" class="card">
+              <button id="deleteAdwBtn">
+                <i class="fas fa-times fa-2x"></i>
+              </button>
+              <button id="editAdwBtn">
+                <i class="fas fa-edit fa-2x"></i>
+              </button>
+              <div class="adw-el">
+                <h5>ADW 0</h5>
+                <p>
+                  SEG: true, USE EXTENSION: true, SEG INTERRUPT: true, IGNORE
+                  ADW: false, M1: true, M2: false, M3: false, Freq. Offset: 0
+                  Hz, Level Offset: 0dB, Phase Offset: 0 deg, Segment Index: 0,
+                  Burst SRI: 0 us, Burst Add Segments: 10
+                </p>
+              </div>
+              <button id="adw-send-btn">Stream ADW</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal" class="modal">
+      <div id="form-modal" class="modal-box"></div>
+    </div>
+  </body>
+</html>

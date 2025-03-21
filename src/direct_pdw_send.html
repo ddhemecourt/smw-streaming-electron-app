@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="direct_pdw_send.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SMW Streaming</title>
+  </head>
+  <body>
+    <div id="body-inner-container">
+      <div>
+        <nav id="main-nav">
+          <img src="img/RFlogo.png" alt="DemoRF" class="logo" />
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="smw_control.html">SMW Control</a></li>
+            <li>
+              <a class="current" href="direct_pdw_send.html">Direct PDW Send</a>
+            </li>
+            <li><a href="rt_pdw_controller.html">RT PDW Controller</a></li>
+            <li><a href="rt_adw_controller.html">RT ADW Controller</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <header>
+          <h1>Direct PDW Send</h1>
+        </header>
+        <div class="container">
+          <div class="card">
+            <h3>Set SMW Basebands</h3>
+            <div id="bb-select-card-pdw">
+              <!-- <div class="bb-select">
+            <h4>SMW 0 [IP Address]:</h4>
+            <span>BB1</span><input type="checkbox" name="BB1" id="BB1" />
+            <span>BB2</span><input type="checkbox" name="BB2" id="BB2" />
+            <span>BB3</span><input type="checkbox" name="BB3" id="BB3" />
+            <span>BB4</span><input type="checkbox" name="BB4" id="BB4" />
+          </div> -->
+            </div>
+          </div>
+          <div id="pdw-card" class="card">
+            <button class="mod-table" id="add-pdw-btn">
+              <i class="fas fa-plus fa-2x"></i>
+            </button>
+            <button class="mod-table" id="delete-pdw-btn">
+              <i class="fas fa-minus fa-2x"></i>
+            </button>
+            <!-- <button id="save-pdw-table-btn" class="btn-right">Save Table</button>
+        <button id="import-pdw-table-btn" class="btn-right">
+          Import Table
+        </button> -->
+            <div class="scrollit">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Baseband(s)</th>
+                    <th>TOA (s)</th>
+                    <th>Word Type</th>
+                    <th>MOP</th>
+                    <th>Freq. Offset (Hz)</th>
+                    <th>Level Offset (dB)</th>
+                    <th>Phase Offset (deg)</th>
+                    <th>Pulse Width (us)</th>
+                    <th>Rise Time (ns)</th>
+                    <th>Fall Time (ns)</th>
+                    <th>Edge Shape</th>
+                    <th>Repetitions</th>
+                    <th>Arb Segment Index</th>
+                    <th>LFM Bandwidth (MHz)</th>
+                    <th>Barker Chip Width (us)</th>
+                    <th>Barker Code</th>
+                    <th>Marker 1</th>
+                    <th>Marker 2</th>
+                    <th>Marker 3</th>
+                    <th>TCDW RF Path</th>
+                    <th>TCDW Command</th>
+                    <th>TCDW Freq (Hz)</th>
+                    <th>TCDW Level (dB)</th>
+                  </tr>
+                </thead>
+                <tbody id="pdw-list"></tbody>
+              </table>
+            </div>
+            <!-- <button id="gen-pdw-file-btn" class="btn-right">Gen PDW File</button> -->
+            <button id="stream-pdw-table-btn" class="btn-right">
+              Stream Table
+            </button>
+            <div style="clear: both"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal" class="modal">
+      <div id="form-modal" class="modal-box"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,538 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"); */
+/* @import "@fortawesome/fontawesome-free/css/all.css"; */
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+
+:root {
+  --primary-color: #535c91;
+  --secondary-color: #9290c3;
+  --light-color: #d3d3d3;
+  --dark-color: #708090;
+  --body-background: #070f2b;
+  --max-width: 1100px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--light-color);
+  background-color: var(--body-background);
+  overflow-x: hidden;
+}
+
+header {
+  padding: 10px 0;
+  text-align: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+img {
+  height: 90px;
+  width: 100%;
+  align-self: center;
+}
+
+#modal-btn {
+  border: none;
+  background: none;
+  color: green;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-box {
+  margin: 10% auto;
+  width: 700px;
+
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+form input {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+#smw-title {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+form label {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+#smw-ip-block {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr;
+  align-items: center;
+}
+
+#smw-connected-row {
+  display: flex;
+  align-items: center;
+}
+#smw-connected-row i {
+  margin-left: 3px;
+}
+
+#connect-smw-btn {
+  display: block;
+  background-color: #708090;
+  border: solid 1px white;
+  border-radius: 5px;
+  color: white;
+  height: 50%;
+}
+
+#pdw-streaming-ips {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 3fr 1fr 3fr 1fr 2fr;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+#pdw-streaming-ips label {
+  font-size: smaller;
+  margin-right: 3px;
+}
+#pdw-streaming-ips input {
+  /* font-size: smaller; */
+  padding-left: 2px;
+  margin: 0;
+  width: 75%;
+}
+
+#adw-streaming-ips {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  align-items: center;
+}
+
+.btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: inherit;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #000;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.card {
+  background-color: #fff;
+  color: #000;
+  margin: 10px;
+  padding: 20px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: red;
+  background: none;
+  border: none;
+}
+
+.delete:hover {
+  color: #000;
+}
+
+.date {
+  color: #999;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .modal-box {
+    width: 90%;
+  }
+}
+
+/* hom btns */
+.home-pg-btn {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: white;
+  width: 50px;
+  height: 30px;
+}
+.home-pg-btn:hover {
+  background-color: var(--dark-color);
+}
+
+#body-inner-container {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+}
+
+/* Main Navbar */
+#main-nav {
+  /* display: grid; */
+  /* grid-template-columns: 1fr; */
+  background-color: var(--primary-color);
+  /* width: 20%; */
+  height: 100vh;
+  width: 143px;
+}
+
+#main-nav ul {
+  /* display: flex; */
+  list-style-type: none;
+  justify-self: start;
+  padding: 0;
+  /* align-items: center; */
+}
+#main-nav li {
+  padding: 1px 3px;
+  height: 100%;
+  text-align: left;
+  text-decoration: none;
+  /* border-left: var(--light-color) solid 2px; */
+  border-bottom: solid 2px white;
+
+  background-color: var(--primary-color);
+  align-items: center;
+}
+#main-nav a {
+  text-decoration: none;
+  color: var(--light-color);
+  padding-bottom: 2px;
+}
+#main-nav li:hover a {
+  color: var(--secondary-color);
+}
+
+/* Block below selected nav element */
+/* #main-nav .current::after {
+  content: ""; 
+  display: block; 
+  margin: 0 auto; 
+  width: 60%; 
+  padding-top: 2px; 
+  border-bottom: 3px solid var(--secondary-color); 
+} */
+
+/* SMW Control Connected SMW */
+#add-smw-btn {
+  border: none;
+  color: var(--secondary-color);
+  background-color: var(--body-background);
+}
+#add-smw-btn:hover {
+  color: var(--primary-color);
+}
+
+#smw-top-row {
+  display: grid;
+  grid-template-columns: 6fr 1fr 1fr;
+}
+
+#editSmwBtn {
+  float: right;
+  margin-left: 5px;
+  border: none;
+  box-shadow: none;
+  background-color: #fff;
+}
+
+#editSmwBtn:hover i {
+  color: var(--primary-color);
+}
+
+#deleteSmwBtn {
+  float: right;
+  border: none;
+  box-shadow: none;
+  background-color: #fff;
+}
+
+#deleteSmwBtn:hover i {
+  color: red;
+}
+
+/* Direct PDW Send */
+.bb-select {
+  display: flex;
+  align-items: center;
+}
+.bb-select h4 {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+.bb-select span {
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+}
+
+table {
+  display: block;
+  overflow-x: scroll;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  width: 100%;
+  /* table-layout: fixed; */
+}
+
+table th {
+  padding: 5px 5px;
+  text-align: center;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+table tr:nth-child(even) {
+  background-color: var(--light-color);
+  color: black;
+}
+table tr:nth-child(even) select {
+  background-color: var(--light-color);
+  color: black;
+}
+
+table select {
+  height: 100%;
+  width: 100%;
+  border: 0;
+  /* white-space: nowrap; */
+}
+
+.scrollit {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.mod-table {
+  background-color: white;
+  border: none;
+}
+.mod-table:hover i {
+  color: #32de84;
+}
+.mod-table i {
+  color: var(--secondary-color);
+}
+
+.btn-right {
+  float: right;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: white;
+  padding: 5px 5px;
+}
+.btn-right:hover {
+  background-color: var(--light-color);
+}
+
+/* RT PDW Controller */
+.init-streaming-button {
+  display: block;
+  padding: 5px 5px;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: white;
+  padding: 5px 5px;
+  margin-right: 5px;
+}
+.init-streaming-button:hover {
+  background-color: var(--light-color);
+}
+
+#intitialization-container {
+  display: flex;
+}
+
+#stopping-container {
+  margin-top: 5px;
+  display: flex;
+}
+
+#add-emitter-btn {
+  background-color: white;
+  border: none;
+}
+#add-emitter-btn:hover i {
+  color: #32de84;
+}
+#add-emitter-btn i {
+  color: var(--secondary-color);
+}
+
+#pdw-emitter-bb-selections {
+  display: flex;
+  align-items: center;
+}
+#pdw-emitter-bb-selections span {
+  margin-left: 10px;
+}
+
+#pdw-bb-select-stream {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+#stream-emitter-table-btn {
+  justify-self: end;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  background-color: white;
+  height: 50%;
+}
+
+/* ADW RT Controller */
+#add-adw-btn {
+  background-color: var(--body-background);
+  color: var(--secondary-color);
+  border: none;
+}
+#add-adw-btn:hover {
+  color: var(--light-color);
+}
+
+.adw-send-btn {
+  color: var(--primary-color);
+  background-color: white;
+  border: 1px solid var(--primary-color);
+}
+.adw-send-btn:hover {
+  background-color: var(--light-color);
+}
+
+#editAdwBtn {
+  float: right;
+  background-color: white;
+  color: black;
+  border: none;
+}
+#editAdwBtn:hover {
+  color: var(--primary-color);
+}
+#deleteAdwBtn {
+  float: right;
+  background-color: white;
+  color: black;
+  border: none;
+}
+#deleteAdwBtn:hover {
+  color: red;
+}
+
+/* Baseband dropdown on PDW list */
+.bb-dropdown-check-list ul {
+  display: none;
+  list-style-type: none;
+}
+.bb-dropdown-check-list .visible {
+  display: block;
+}
+
+.anchor i {
+  float: right;
+  transition: 0.4s;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.fa-circle-xmark {
+  color: red;
+  padding-left: 2px;
+}
+
+.fa-circle-check {
+  color: #06e302;
+  padding-left: 2px;
+}
+
+.fa-circle {
+  color: gray;
+  padding-left: 2px;
+}
+
+#pdw-stream-status span {
+  padding-left: 5px;
+}
+
+/* Load Spinner */
+.spinner {
+  display: none;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border-top-color: #3498db; /* Spinner color */
+  animation: spin 1s linear infinite;
+}
+
+.spinner.visible {
+  display: block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

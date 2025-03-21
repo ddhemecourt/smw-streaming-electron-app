@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="rt_pdw_controller.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SMW Streaming</title>
+  </head>
+  <body>
+    <div id="body-inner-container">
+      <div>
+        <nav id="main-nav">
+          <img src="img/RFlogo.png" alt="DemoRF" class="logo" />
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="smw_control.html">SMW Control</a></li>
+            <li>
+              <a href="direct_pdw_send.html">Direct PDW Send</a>
+            </li>
+            <li>
+              <a class="current" href="rt_pdw_controller.html"
+                >RT PDW Controller</a
+              >
+            </li>
+            <li><a href="rt_adw_controller.html">RT ADW Controller</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <header>
+          <h1>Real-Time PDW Streaming Controller</h1>
+        </header>
+        <div class="container">
+          <div class="card">
+            <h3>Set SMW200A Basebands</h3>
+            <div id="bb-select-card">
+              <div class="bb-select">
+                <h4>SMW 0 [IP Address]:</h4>
+                <span>BB1</span><input type="checkbox" name="BB1" id="BB1" />
+                <span>BB2</span><input type="checkbox" name="BB2" id="BB2" />
+                <span>BB3</span><input type="checkbox" name="BB3" id="BB3" />
+                <span>BB4</span><input type="checkbox" name="BB4" id="BB4" />
+              </div>
+            </div>
+            <div id="intitialization-container">
+              <button id="init-streaming-btn" class="init-streaming-button">
+                <i class="fas fa-circle-arrow-up"></i> Initialize Streaming
+              </button>
+              <div id="init-spinner" class="spinner"></div>
+            </div>
+            <div id="stopping-container">
+              <button id="stop-streaming-btn" class="init-streaming-button">
+                <i class="fas fa-circle-arrow-down"></i> Stop Streaming
+              </button>
+              <div id="stop-spinner" class="spinner"></div>
+            </div>
+            <h4 id="intitialization-status">Status:</h4>
+          </div>
+          <div id="emitter-card" class="card">
+            <button class="mod-table" id="add-emitter-btn">
+              <i class="fas fa-plus fa-2x"></i>
+            </button>
+            <button class="mod-table" id="delete-emitter-btn">
+              <i class="fas fa-minus fa-2x"></i>
+            </button>
+            <div class="scrollit">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Selected</th>
+                    <th>Pulse Width (us)</th>
+                    <th>PRI (us)</th>
+                    <th>MOP</th>
+                    <th>Time Offset (us)</th>
+                    <th>Freq Offset (Hz)</th>
+                    <th>Level Offset (dB)</th>
+                    <th>Phase Offset (deg)</th>
+                    <th>Rise Time (ns)</th>
+                    <th>Fall Time (ns)</th>
+                    <th>Edge Shape</th>
+                    <th>Arb Segment Index</th>
+                    <th>LFM Bandwidth (MHz)</th>
+                    <th>Barker Code</th>
+                    <th>Barker Chip Width (us)</th>
+                  </tr>
+                </thead>
+                <tbody id="emitter-list">
+                  <tr id="emitter_0">
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                  </tr>
+                  <tr id="emitter_1">
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">x</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="pdw-bb-select-stream">
+              <div id="pdw-emitter-bb-selections">
+                <h4>Basebands:</h4>
+                <span>BB1</span><input type="checkbox" name="BB1" id="BB1" />
+                <span>BB2</span><input type="checkbox" name="BB2" id="BB2" />
+                <span>BB3</span><input type="checkbox" name="BB3" id="BB3" />
+                <span>BB4</span><input type="checkbox" name="BB4" id="BB4" />
+                <span>BB5</span><input type="checkbox" name="BB5" id="BB5" />
+                <span>BB6</span><input type="checkbox" name="BB6" id="BB6" />
+              </div>
+              <button id="stream-emitter-table-btn">
+                <i class="fas fa-play"></i> Stream Table
+              </button>
+              <!-- <div style="clear: both"></div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modal" class="modal">
+      <div id="form-modal" class="modal-box"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="index.js" type="module"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>SMW Streaming</title>
+  </head>
+  <body>
+    <div id="body-inner-container">
+      <div>
+        <nav id="main-nav">
+          <img src="img/RFlogo.png" alt="DemoRF" class="logo" />
+          <ul>
+            <li>
+              <a class="current" href="index.html">Home</a>
+            </li>
+            <li><a href="smw_control.html">SMW Control</a></li>
+            <li><a href="direct_pdw_send.html">Direct PDW Send</a></li>
+            <li><a href="rt_pdw_controller.html">RT PDW Controller</a></li>
+            <li><a href="rt_adw_controller.html">RT ADW Controller</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div>
+        <header>
+          <h1>SMW200A Streaming App Home</h1>
+        </header>
+        <div class="container">
+          <div class="card">
+            <h3>SMW Control:</h3>
+            <p>Controller to initiate SMW200A connections.</p>
+            <button id="go-to-smw-control" class="home-pg-btn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="card">
+            <h3>Direct PDW Send:</h3>
+            <p>Send PDWs to the SMW200A in tabular entry format.</p>
+            <button id="go-to-direct-pdw-send" class="home-pg-btn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="card">
+            <h3>Real-Time PDW Controller:</h3>
+            <p>
+              Define emitter parameters to interleave on each accessible
+              baseband.
+            </p>
+            <button id="go-to-rt-pdw-controller" class="home-pg-btn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="card">
+            <h3>Real-Time ADW Controller:</h3>
+            <p>Define ADWs to send to the SMW.</p>
+            <button id="go-to-rt-adw-controller" class="home-pg-btn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div id="form-modal" class="modal-box"></div>
+    </div>
+  </body>
+</html>
