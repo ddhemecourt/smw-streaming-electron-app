@@ -44,9 +44,18 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "electron-squirrel-startup": "^1.0.1",
+    "express": "^4.21.2",
     "mongodb": "^6.13.0",
-    "mongoose": "^8.10.0",
+    "mongoose": "^8.12.1",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddhemecourt/smw-streaming-electron-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ddhemecourt/smw-streaming-electron-app/issues"
+  },
+  "homepage": "https://github.com/ddhemecourt/smw-streaming-electron-app#readme"
 }

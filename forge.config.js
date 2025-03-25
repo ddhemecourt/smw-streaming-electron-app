@@ -5,8 +5,8 @@ module.exports = {
   packagerConfig: {
     asar: true,
     extraResource: [
-      "/home/duncan/Documents/electron_webpack_test/my-new-app/src/server/mongo",
-      "/home/duncan/Documents/electron_webpack_test/my-new-app/src/server/c_exec/cyclic_PDW_test",
+      "./src/server/mongo",
+      "./src/server/c_exec/cyclic_PDW_test",
     ],
   },
   rebuildConfig: {},
