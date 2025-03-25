@@ -1,30 +1,30 @@
-const { app, BrowserWindow, utilityProcess } = require("electron");
-const SmwsApi = require("./services/smwsApi");
-const fs = require("fs");
-const path = require("node:path");
-require("dotenv").config();
-let { fork, spawn } = require("child_process");
+const { app, BrowserWindow, utilityProcess } = require('electron');
+const SmwsApi = require('./services/smwsApi');
+const fs = require('fs');
+const path = require('node:path');
+require('dotenv').config();
+let { fork, spawn } = require('child_process');
 let quitAttempt = 0;
-const Server = require(path.join(__dirname, "server/server"));
+const Server = require(path.join(__dirname, 'server/server'));
 new Server();
 
-let serverPath = path.join(__dirname, "server", "server.js");
-let mongoPath = path.join(__dirname, "server", "mongo", "mongod");
-let mongoDataPath = path.join(__dirname, "server", "mongo", "data");
+let serverPath = path.join(__dirname, 'server', 'server.js');
+let mongoPath = path.join(__dirname, 'server', 'mongo', 'mongod.exe');
+let mongoDataPath = path.join(__dirname, 'server', 'mongo', 'data');
 let mongoProcess;
 if (app.isPackaged) {
-  serverPath = path.join(process.resourcesPath, "server", "server.js");
-  mongoPath = path.join(process.resourcesPath, "mongo", "mongod");
-  if (!fs.existsSync(path.join(process.env.HOME, "mongo"))) {
-    fs.mkdirSync(path.join(process.env.HOME, "mongo"));
+  serverPath = path.join(process.resourcesPath, 'server', 'server.js');
+  mongoPath = path.join(process.resourcesPath, 'mongo', 'mongod.exe');
+  if (!fs.existsSync(path.join(app.getPath('home'), 'mongo'))) {
+    fs.mkdirSync(path.join(app.getPath('home'), 'mongo'));
   }
-  mongoDataPath = path.join(process.env.HOME, "mongo");
+  mongoDataPath = path.join(app.getPath('home'), 'mongo');
   console.log(`RESOURCE PATH: ${process.resourcesPath}`);
-  console.log(`Mongo data PATH: ${path.join(process.env.HOME, "mongo")}`);
+  console.log(`Mongo data PATH: ${path.join(app.getPath('home'), 'mongo')}`);
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require("electron-squirrel-startup")) {
+if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
@@ -37,7 +37,7 @@ const createWindow = () => {
     //   preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     // },
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -45,7 +45,7 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   // mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.loadFile("src/index.html");
+  mainWindow.loadFile('src/index.html');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -57,20 +57,20 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
   const mongoCmd = `${mongoPath}`;
-  const mongoCmdArgs = ["--port", "27080", "--dbpath", `${mongoDataPath}`];
-  console.log("MONGO CMD: " + mongoCmd);
+  const mongoCmdArgs = ['--port', '27080', '--dbpath', `${mongoDataPath}`];
+  console.log('MONGO CMD: ' + mongoCmd);
   mongoProcess = spawn(mongoCmd, mongoCmdArgs);
-  mongoProcess.on("error", (err) => {
-    console.error("Failed to start subprocess.", err);
+  mongoProcess.on('error', (err) => {
+    console.error('Failed to start subprocess.', err);
   });
 
-  mongoProcess.on("close", (code) => {
+  mongoProcess.on('close', (code) => {
     console.error(`Mongo process exited with code ${code}`);
   });
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  app.on("activate", () => {
+  app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
@@ -80,15 +80,15 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-app.on("before-quit", async (event) => {
+app.on('before-quit', async (event) => {
   if (quitAttempt < 1) {
     event.preventDefault();
     await SmwsApi.stopEmitterStreaming();

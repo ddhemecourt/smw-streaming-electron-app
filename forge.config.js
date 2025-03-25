@@ -1,26 +1,26 @@
-const { FusesPlugin } = require("@electron-forge/plugin-fuses");
-const { FuseV1Options, FuseVersion } = require("@electron/fuses");
+const { FusesPlugin } = require('@electron-forge/plugin-fuses');
+const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
   packagerConfig: {
     asar: true,
     extraResource: [
-      "/home/duncan/Documents/electron_webpack_test/my-new-app/src/server/mongo",
-      "/home/duncan/Documents/electron_webpack_test/my-new-app/src/server/c_exec/cyclic_PDW_test",
+      './src/server/mongo',
+      './src/server/c_exec/cyclic_PDW_test',
     ],
   },
   rebuildConfig: {},
   makers: [
     {
-      name: "@electron-forge/maker-squirrel",
+      name: '@electron-forge/maker-squirrel',
       config: {},
     },
     {
-      name: "@electron-forge/maker-zip",
-      platforms: ["darwin"],
+      name: '@electron-forge/maker-zip',
+      platforms: ['darwin'],
     },
     {
-      name: "@electron-forge/maker-deb",
+      name: '@electron-forge/maker-deb',
       config: {},
     },
     // {
@@ -30,7 +30,7 @@ module.exports = {
   ],
   plugins: [
     {
-      name: "@electron-forge/plugin-auto-unpack-natives",
+      name: '@electron-forge/plugin-auto-unpack-natives',
       config: {},
     },
     // {

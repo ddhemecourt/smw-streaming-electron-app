@@ -1,22 +1,22 @@
-let exec = require("child_process").execFile;
-const net = require("net");
-const { resolve } = require("path");
-const path = require("node:path");
+let exec = require('child_process').execFile;
+const net = require('net');
+const { resolve } = require('path');
+const path = require('node:path');
 
 class EmtterUtilities {
   constructor() {
     this.emitterProcess;
     // this.command = "../c_exec/cyclic_PDW_test";
-    // this.command = path.join(__dirname, "..", "c_exec", "cyclic_PDW_test");
-    this.command = path.join(process.resourcesPath, "cyclic_PDW_test");
-    this.ipAddress = "127.0.0.1";
+    this.command = path.join(__dirname, '..', 'c_exec', 'cyclic_PDW_test');
+    // this.command = path.join(process.resourcesPath, "cyclic_PDW_test");
+    this.ipAddress = '127.0.0.1';
     this.port = 8080;
     this.emitterSocket;
   }
 
   async startEmitterExecutable(smw, bbIps) {
     const smwIp = smw.ip_address;
-    console.log("SMW and BBS IPS: " + smwIp + " " + bbIps);
+    console.log('SMW and BBS IPS: ' + smwIp + ' ' + bbIps);
     let args = [];
     for (let i = 0; i < bbIps.length; i++) {
       console.log(bbIps[i]);
@@ -33,16 +33,16 @@ class EmtterUtilities {
             console.error(`exec error: ${error}`);
             console.log(`stdout: ${stdout}`);
             console.error(`stderr: ${stderr}`);
-            reject("There was an issue");
+            reject('There was an issue');
           }
           console.log(`stdout: ${stdout}`);
           console.error(`stderr: ${stderr}`);
           // reject("There was an issue");
         }
       );
-      console.log("Started Executable");
+      console.log('Started Executable');
       setTimeout(() => {
-        resolve("Success");
+        resolve('Success');
       }, 3000);
     });
   }
@@ -50,14 +50,14 @@ class EmtterUtilities {
   async stopEmitterExecutable() {
     return new Promise((resolve, reject) => {
       if (!this.emitterProcess) {
-        resolve("No process to stop.");
+        resolve('No process to stop.');
       }
-      this.emitterProcess.kill("SIGTERM");
+      this.emitterProcess.kill('SIGTERM');
       this.emitterProcess = null;
       this.emitterSocket.destroy();
       setTimeout(() => {
-        console.log("Closed process");
-        resolve("Success closed thread");
+        console.log('Closed process');
+        resolve('Success closed thread');
       }, 2000);
     });
   }
@@ -67,15 +67,15 @@ class EmtterUtilities {
       this.emitterSocket = new net.Socket();
       const timeoutId = setTimeout(() => {
         this.emitterSocket.destroy();
-        reject("ERROR: Timeout");
+        reject('ERROR: Timeout');
       }, 3000);
       this.emitterSocket.connect(this.port, this.ipAddress, () => {
         clearTimeout(timeoutId);
         resolve(`Success`);
-        console.log("Connected socket");
+        console.log('Connected socket');
       });
-      this.emitterSocket.on("error", (err) => {
-        console.error("Error:", err);
+      this.emitterSocket.on('error', (err) => {
+        console.error('Error:', err);
       });
     });
   }
@@ -91,11 +91,11 @@ class EmtterUtilities {
 
   sendEmitterPacket(emitters) {
     //To do: review format sent from matalb
-    const header = "EMITTER,";
+    const header = 'EMITTER,';
     const basebands = emitters[0].basebands;
     // const basebands = "1";
 
-    let emitterWord = "";
+    let emitterWord = '';
 
     emitterWord += header;
     emitterWord += basebands;
@@ -103,38 +103,38 @@ class EmtterUtilities {
     for (const emitter of emitters) {
       let mop;
       switch (emitter.mop) {
-        case "Unmod":
+        case 'Unmod':
           mop = 0;
           break;
-        case "LFM":
+        case 'LFM':
           mop = 1;
           break;
-        case "TLFM":
+        case 'TLFM':
           mop = 2;
           break;
-        case "Barker":
+        case 'Barker':
           mop = 3;
           break;
-        case "Arb Seg":
+        case 'Arb Seg':
           mop = 4;
           break;
       }
 
       let edgeType;
       switch (emitter.edge_shape) {
-        case "LIN":
+        case 'LIN':
           edgeType = 0;
           break;
-        case "COS":
+        case 'COS':
           edgeType = 1;
           break;
       }
 
-      const bursted = "0";
-      const cpi = "0";
-      const burstLength = "0";
-      const cpiOffset = "0";
-      const directionIndex = "0";
+      const bursted = '0';
+      const cpi = '0';
+      const burstLength = '0';
+      const cpiOffset = '0';
+      const directionIndex = '0';
 
       emitterWord = this.appendField(emitterWord, mop);
       emitterWord = this.appendField(emitterWord, emitter.pri);
@@ -156,14 +156,14 @@ class EmtterUtilities {
       emitterWord = this.appendField(emitterWord, directionIndex);
     }
 
-    console.log("emitterWord: " + emitterWord);
-    emitterWord += "\n";
+    console.log('emitterWord: ' + emitterWord);
+    emitterWord += '\n';
     this.emitterSocket.write(emitterWord);
     //Send word
   }
 
   appendField(str, newField) {
-    str = str + "," + newField;
+    str = str + ',' + newField;
     return str;
   }
 }
