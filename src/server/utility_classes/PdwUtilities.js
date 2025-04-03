@@ -1,5 +1,6 @@
-const net = require("net");
-const { resolve } = require("path");
+const { log } = require('console');
+const net = require('net');
+const { resolve } = require('path');
 
 class PdwUtilities {
   constructor() {
@@ -17,7 +18,7 @@ class PdwUtilities {
   async checkPdwSocketStatus(smws) {
     smws.forEach((smw) => {
       for (let i = 0; i < smw.bb_ips.length; i++) {
-        smw.bb_ips[i].active = "false";
+        smw.bb_ips[i].active = 'false';
         for (let j = 0; j < Object.keys(this.pdwSockets).length; j++) {
           if (smw.bb_ips[i].ip_address === this.pdwSockets[j].remoteAddress) {
             console.log(
@@ -26,10 +27,10 @@ class PdwUtilities {
               this.pdwSockets[j].remoteAddress,
               this.pdwSockets[j].readyState
             );
-            if (this.pdwSockets[j].readyState === "open") {
-              smw.bb_ips[i].active = "true";
+            if (this.pdwSockets[j].readyState === 'open') {
+              smw.bb_ips[i].active = 'true';
             } else {
-              smw.bb_ips[i].active = "false";
+              smw.bb_ips[i].active = 'false';
             }
           }
         }
@@ -59,12 +60,12 @@ class PdwUtilities {
         newPdwIdx = 0;
       }
       let newPdwSocket = new net.Socket();
-      if (bbIp.active === "true") {
+      if (bbIp.active === 'true') {
         const timeoutId = setTimeout(() => {
           newPdwSocket.destroy();
           // this.pdwSockets = {};
           // console.log("Connection timed out after 3 seconds");
-          reject("ERROR: Connection timed out after 3 seconds");
+          reject('ERROR: Connection timed out after 3 seconds');
         }, 3000);
 
         newPdwSocket.connect(bbIp.port, bbIp.ip_address, async () => {
@@ -99,7 +100,7 @@ class PdwUtilities {
   async streamPdwLists(pdwList) {
     const pdwLists = await this.pdwListToPdwLists(pdwList);
     for (let i = 0; i < Object.keys(this.pdwSockets).length; i++) {
-      console.log(pdwLists[i], i, pdwLists);
+      // console.log(pdwLists[i], i, pdwLists);
       await this.streamPdwList(pdwLists[i], i);
     }
   }
@@ -115,7 +116,7 @@ class PdwUtilities {
         buffTailPtr++;
       }
       if ((i + 1) % 10 === 0) {
-        console.log("sending pdw packet with length 10 pdws");
+        console.log('sending pdw packet with length 10 pdws');
         this.pdwSockets[socket].write(buffer.subarray(0, buffTailPtr));
         buffTailPtr = 0;
       }
@@ -133,7 +134,7 @@ class PdwUtilities {
       pdwLists[newKey] = [];
     }
     pdwList.forEach((pdw) => {
-      const bbs = pdw.basebands.split(",");
+      const bbs = pdw.basebands.split(',');
       bbs.forEach((bb) => {
         pdwLists[+bb - 1].push(pdw);
       });
@@ -143,29 +144,29 @@ class PdwUtilities {
   }
 
   constructPdwExpert(pdw) {
-    if (pdw.word_type === "TCDW") {
+    if (pdw.word_type === 'TCDW') {
       return this.constructTcdw(pdw);
     }
     const toa = BigInt(Math.round(+pdw.toa * 2.4e9));
-    const seg = pdw.mop === "Arb Seg" ? 1 : 0;
+    const seg = pdw.mop === 'Arb Seg' ? 1 : 0;
     const freq_offset = Math.round(
       (+pdw.freq_offset / 2.4e9) * Math.pow(2, 32)
     );
     const level_offset = Math.round(
-      Math.pow(10, -pdw.level_offset / 20) * (Math.pow(2, 15) - 1)
+      Math.pow(10, -pdw.level_offset / 20) * Math.pow(2, 15) - 1
     );
     const phase_offset = Math.round((pdw.phase_offset / 360) * Math.pow(2, 16));
-    const ton = Math.round(pdw.pulse_width * 1e-6 * 2.4e9);
-    const edge_type = pdw.edge_type === "LIN" ? 0 : 1;
+    let ton = Math.round(pdw.pulse_width * 1e-6 * 2.4e9);
+    const edge_type = pdw.edge_type === 'LIN' ? 0 : 1;
     const rise_time = pdw.rise_time * 1e-9 * 2.4e9;
     const fall_time = pdw.fall_time * 1e-9 * 2.4e9;
     const freq_inc = BigInt(
       Math.round(((pdw.lfm_bandwidth * 1e6) / ton / 2.4e9) * Math.pow(2, 64))
     );
-    const chip_width = pdw.barker_chip_width * 1e-6 * 2.4e9;
-    const m1 = pdw.m1 === "true" ? 1 : 0;
-    const m2 = pdw.m2 === "true" ? 1 : 0;
-    const m3 = pdw.m3 === "true" ? 1 : 0;
+    const chip_width = BigInt(Math.round(pdw.barker_chip_width * 1e-6 * 2.4e9));
+    const m1 = pdw.m1 === 'true' ? 1 : 0;
+    const m2 = pdw.m2 === 'true' ? 1 : 0;
+    const m3 = pdw.m3 === 'true' ? 1 : 0;
 
     const burst_pri = pdw.burst_pri * 1e-6 * 2.4e9;
     const burst_add_segments = +pdw.repetitions;
@@ -189,7 +190,9 @@ class PdwUtilities {
     );
     // console.log(toa, toa >> 4, toa << 4, pdw_word);
     //flags
-    pdw_word.push(0x00 | (pdw.M3 << 2) | (pdw.M2 << 1) | pdw.M1);
+    pdw_word.push(
+      0x00 | (pdw.M3 << 2) | (0x00 | (pdw.M2 << 1)) | (0x00 | pdw.M1)
+    );
 
     //body
     pdw_word.push((freq_offset >> 24) & 0xff);
@@ -202,21 +205,24 @@ class PdwUtilities {
     pdw_word.push(phase_offset & 0xff);
 
     //payload
-    if (pdw.mop === "Unmod") {
-      pdw_word.push(0x00 | (ton >> 40));
-      pdw_word.push((ton >> 32) & 0xff);
-      pdw_word.push((ton >> 24) & 0xff);
-      pdw_word.push((ton >> 16) & 0xff);
-      pdw_word.push((ton >> 8) & 0xff);
-      pdw_word.push(ton & 0xff);
+    if (pdw.mop === 'Unmod') {
+      const newTon = BigInt(ton);
+      pdw_word.push(
+        Number(BigInt(0x00) | ((newTon >> BigInt(40)) & BigInt(0xff)))
+      );
+      pdw_word.push(Number((newTon >> BigInt(32)) & BigInt(0xff)));
+      pdw_word.push(Number((newTon >> BigInt(24)) & BigInt(0xff)));
+      pdw_word.push(Number((newTon >> BigInt(16)) & BigInt(0xff)));
+      pdw_word.push(Number((newTon >> BigInt(8)) & BigInt(0xff)));
+      pdw_word.push(Number(newTon & BigInt(0xff)));
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
-    } else if (pdw.mop === "LFM") {
-      pdw_word.push((0x01 << 4) | (ton >> 24));
+    } else if (pdw.mop === 'LFM') {
+      pdw_word.push((0x01 << 4) | ((ton >> 24) & 0xff));
       pdw_word.push((ton >> 16) & 0xff);
       pdw_word.push((ton >> 8) & 0xff);
       pdw_word.push(ton & 0xff);
@@ -229,8 +235,8 @@ class PdwUtilities {
       pdw_word.push(Number((freq_inc >> BigInt(16)) & BigInt(0xff)));
       pdw_word.push(Number((freq_inc >> BigInt(8)) & BigInt(0xff)));
       pdw_word.push(Number(freq_inc & BigInt(0xff)));
-    } else if (pdw.mop === "TLFM") {
-      pdw_word.push((0x02 << 4) | (ton >> 24));
+    } else if (pdw.mop === 'TLFM') {
+      pdw_word.push((0x02 << 4) | ((ton >> 24) & 0xff));
       pdw_word.push((ton >> 16) & 0xff);
       pdw_word.push((ton >> 8) & 0xff);
       pdw_word.push(ton & 0xff);
@@ -242,20 +248,25 @@ class PdwUtilities {
       pdw_word.push(Number((freq_inc >> BigInt(16)) & BigInt(0xff)));
       pdw_word.push(Number((freq_inc >> BigInt(8)) & BigInt(0xff)));
       pdw_word.push(Number(freq_inc & BigInt(0xff)));
-    } else if (pdw.mop == "Barker") {
-      pdw_word.push((0x03 << 4) | (chip_width >> 40));
-      pdw_word.push((chip_width >> 32) & 0xff);
-      pdw_word.push((chip_width >> 24) & 0xff);
-      pdw_word.push((chip_width >> 16) & 0xff);
-      pdw_word.push((chip_width >> 8) & 0xff);
-      pdw_word.push(chip_width & 0xff);
-      pdw_word.push((+pdw.barker_code << 4) | 0x00);
+    } else if (pdw.mop == 'Barker') {
+      pdw_word.push(
+        Number(
+          (BigInt(0x03) << BigInt(4)) |
+            ((chip_width >> BigInt(40)) & BigInt(0xff))
+        )
+      );
+      pdw_word.push(Number((chip_width >> BigInt(32)) & BigInt(0xff)));
+      pdw_word.push(Number((chip_width >> BigInt(24)) & BigInt(0xff)));
+      pdw_word.push(Number((chip_width >> BigInt(16)) & BigInt(0xff)));
+      pdw_word.push(Number((chip_width >> BigInt(8)) & BigInt(0xff)));
+      pdw_word.push(Number(chip_width & BigInt(0xff)));
+      pdw_word.push((+pdw.barker_code << 4) | (0x00 & 0xff));
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
       pdw_word.push(0x00);
-    } else if (pdw.mop == "Arb Seg") {
+    } else if (pdw.mop == 'Arb Seg') {
       pdw_word.push((+pdw.arb_seg_index >> 16) & 0xff);
       pdw_word.push((+pdw.arb_seg_index >> 8) & 0xff);
       pdw_word.push(+pdw.arb_seg_index & 0xff);
@@ -272,18 +283,20 @@ class PdwUtilities {
 
     //extension flags
     if (+pdw.repetitions === 0) {
+      console.log('PDW REPS 0');
       pdw_word.push(0x20);
       pdw_word.push(0x00);
     } else {
       pdw_word.push(0x28);
       pdw_word.push(0x00);
+      console.log('PDW REPS mor than zero');
     }
 
     //rise time field
-    pdw_word.push((edge_type << 5) | (false << 4) | (rise_time >> 18));
+    pdw_word.push((edge_type << 5) | (false << 4) | ((rise_time >> 18) & 0xff));
     pdw_word.push((rise_time >> 10) & 0xff);
     pdw_word.push((rise_time >> 2) & 0xff);
-    pdw_word.push((rise_time << 6) | (fall_time >> 16));
+    pdw_word.push((rise_time << 6) | ((fall_time >> 16) & 0xff));
     pdw_word.push(fall_time >> 8);
     pdw_word.push(fall_time);
 
@@ -317,7 +330,7 @@ class PdwUtilities {
     let L_HUND;
     console.log(tcdw.tcdw_path);
     console.log(tcdw.tcdw_command);
-    let PATH = tcdw.tcdw_path === "A" ? 0 : 1;
+    let PATH = tcdw.tcdw_path === 'A' ? 0 : 1;
 
     if (tcdw.tcdw_level <= 0) {
       L_POSNEG = 1;
@@ -338,13 +351,13 @@ class PdwUtilities {
       Math.floor(100 * (temp - Math.floor(temp))) -
       10 * Math.floor(10 * (temp - Math.floor(temp)));
 
-    if ("Frequency" === tcdw.tcdw_command) {
+    if ('Frequency' === tcdw.tcdw_command) {
       CMD = 0;
-    } else if ("Amplitude" === tcdw.tcdw_command) {
+    } else if ('Amplitude' === tcdw.tcdw_command) {
       CMD = 1;
-    } else if ("Frequency & Amplitude" === tcdw.tcdw_command) {
+    } else if ('Frequency & Amplitude' === tcdw.tcdw_command) {
       CMD = 2;
-    } else if ("Re-Arm" === tcdw.tcdw_command) {
+    } else if ('Re-Arm' === tcdw.tcdw_command) {
       CMD = 3;
     }
     let tcdw_word = [];
